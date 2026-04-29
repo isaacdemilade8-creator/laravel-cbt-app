@@ -8,5 +8,7 @@
 </head>
 <body>
     hello
+    <a href={{ route('login') }}>login</a>
+    <a href={{ route('register') }}>sign up</a>
 </body>
 </html>
