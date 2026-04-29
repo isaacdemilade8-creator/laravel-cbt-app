@@ -1,0 +1,242 @@
+/* ============================================================
+   leaderboard.css — Dark theme for Leaderboard page
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Sora:wght@300;400;600;700&display=swap');
+
+:root {
+    --bg-base:      #0d0f14;
+    --bg-surface:   #13161e;
+    --bg-elevated:  #1a1e2a;
+
+    --border:       #ffffff10;
+    --border-soft:  #ffffff08;
+
+    --accent:       #4f8ef7;
+    --accent-dim:   #4f8ef715;
+
+    --gold:         #fbbf24;
+    --gold-dim:     #fbbf2418;
+    --gold-border:  #fbbf2435;
+
+    --silver:       #94a3b8;
+    --silver-dim:   #94a3b818;
+    --silver-border:#94a3b830;
+
+    --bronze:       #f97316;
+    --bronze-dim:   #f9731618;
+    --bronze-border:#f9731630;
+
+    --green:        #2dd4a0;
+
+    --text-primary:   #e8eaf0;
+    --text-secondary: #7a8099;
+    --text-muted:     #3d4257;
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+
+    --font-ui:   'Sora', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+    font-family: var(--font-ui);
+    background: var(--bg-base);
+    color: var(--text-primary);
+    margin: 0;
+    padding: 40px 32px 80px;
+    min-height: 100vh;
+    background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+/* ── Page title ─────────────────────────────────────────────── */
+h1 {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 28px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+h1::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 99px;
+    flex-shrink: 0;
+}
+
+/* ── Table wrapper ──────────────────────────────────────────── */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+
+table {
+    width: 100%;
+    min-width: 320px;
+    border-collapse: collapse;
+    background: var(--bg-surface);
+}
+
+/* ── Header ─────────────────────────────────────────────────── */
+th {
+    background: var(--bg-elevated);
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 13px 18px;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    white-space: nowrap;
+}
+
+/* ── Rows ───────────────────────────────────────────────────── */
+td {
+    padding: 13px 18px;
+    border: none;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: 14px;
+    color: var(--text-secondary);
+    text-align: left;
+    white-space: nowrap;
+}
+
+tr:last-child td { border-bottom: none; }
+
+tr:hover td {
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+}
+
+/* Name column */
+td:nth-child(2) {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* Score column */
+td:nth-child(3) {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    color: var(--green);
+}
+
+/* Exams taken column */
+td:nth-child(4) {
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+}
+
+/* ── Rank badge ─────────────────────────────────────────────── */
+td:first-child {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 13px;
+    text-align: center;
+    width: 60px;
+}
+
+/* Gold — 1st */
+tr:nth-child(2) td:first-child {
+    color: var(--gold);
+    text-shadow: 0 0 10px #fbbf2460;
+}
+tr:nth-child(2) td {
+    background: var(--gold-dim);
+    border-bottom-color: var(--gold-border);
+}
+
+/* Silver — 2nd */
+tr:nth-child(3) td:first-child {
+    color: var(--silver);
+    text-shadow: 0 0 10px #94a3b850;
+}
+tr:nth-child(3) td {
+    background: var(--silver-dim);
+    border-bottom-color: var(--silver-border);
+}
+
+/* Bronze — 3rd */
+tr:nth-child(4) td:first-child {
+    color: var(--bronze);
+    text-shadow: 0 0 10px #f9731650;
+}
+tr:nth-child(4) td {
+    background: var(--bronze-dim);
+    border-bottom-color: var(--bronze-border);
+}
+
+/* Keep hover readable over medal rows */
+tr:nth-child(2):hover td,
+tr:nth-child(3):hover td,
+tr:nth-child(4):hover td {
+    filter: brightness(1.15);
+}
+
+/* ── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 4px; }
+::-webkit-scrollbar-track { background: var(--bg-base); }
+::-webkit-scrollbar-thumb { background: var(--bg-elevated); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+::selection { background: var(--accent-dim); color: var(--accent); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 1024px) {
+    body { padding: 32px 24px 60px; }
+}
+
+@media (max-width: 768px) {
+    body { padding: 24px 16px 60px; }
+    th, td { padding: 11px 14px; font-size: 13px; }
+}
+
+@media (max-width: 480px) {
+    body { padding: 20px 12px 48px; }
+    h1 { font-size: 10px; }
+    th, td { padding: 9px 10px; font-size: 12px; }
+    td:first-child { width: 44px; }
+}
+
+@media (max-width: 360px) {
+    body { padding: 16px 10px 40px; }
+    th, td { padding: 8px; font-size: 11px; }
+}
+
+@media (max-width: 220px) {
+    body { padding: 10px 8px 24px; background-image: none; }
+
+    h1 { font-size: 8px; letter-spacing: 0.08em; }
+    h1::before { width: 14px; }
+
+    /* Hide Exams Taken on watch */
+    th:nth-child(4), td:nth-child(4) { display: none; }
+
+    th, td { padding: 6px 8px; font-size: 10px; }
+    td:first-child { width: 32px; font-size: 11px; }
+}
