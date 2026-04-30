@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    @vite(['resources/css/results.css'])
-    <title>Document</title>
+    @vite(['resources/css/cbt-ui.css'])
+    <title>Exam Result</title>
 </head>
 
 <body>
@@ -17,8 +17,9 @@
 
 <hr>
 
+<div id="questionList">
 @foreach ($attempt->exam->questions as $question)
-    <div>
+    <div class="question-stat">
 
         <p><strong>Q:</strong> {{ $question->question_text }}</p>
 
@@ -52,6 +53,7 @@
 
     </div>
 @endforeach
+</div>
 </body>
 
 </html>

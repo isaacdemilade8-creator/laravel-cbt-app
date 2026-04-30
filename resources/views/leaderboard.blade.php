@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    @vite(['resources/css/leaderboard.css'])
-    <title>Document</title>
+    @vite(['resources/css/cbt-ui.css'])
+    <title>Leaderboard</title>
 </head>
 <body>
     <h2>Leaderboard</h2>
 
-<table border="1" cellpadding="10">
+<div class="table-wrapper">
+<table>
     <tr>
         <th>Rank</th>
         <th>Name</th>
@@ -29,5 +30,6 @@
         </tr>
     @endforeach
 </table>
+</div>
 </body>
 </html>

@@ -7,6 +7,7 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/css/add-question.css',
+                'resources/css/cbt-ui.css',
                 'resources/css/dashboard.css',
                 'resources/css/leaderboard.css',
                 'resources/css/results.css',

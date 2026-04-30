@@ -4,20 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    @vite(['resources/css/student-dashboard.css'])
-    <title>Document</title>
+    @vite(['resources/css/cbt-ui.css'])
+    <title>Student Dashboard</title>
 </head>
 <body>
     <h2>Student Dashboard</h2>
 
-<div style="display:flex; gap:20px; margin-bottom:20px;">
+<div class="cards">
 
-    <div style="padding:10px; border:1px solid #ccc;">
+    <div class="card">
         <h3>Total Exams</h3>
         <p>{{ $totalExams }}</p>
     </div>
 
-    <div style="padding:10px; border:1px solid #ccc;">
+    <div class="card">
         <h3>Average Score</h3>
         <p>{{ number_format($averageScore, 2) }}</p>
     </div>
@@ -29,7 +29,7 @@
 <h3>My Attempts</h3>
 
 @foreach ($attempts as $attempt)
-    <div style="padding:10px; border:1px solid #ddd; margin-bottom:10px;">
+    <div class="question-stat">
 
         <p><strong>Exam:</strong> {{ $attempt->exam->title ?? 'Unknown' }}</p>
 

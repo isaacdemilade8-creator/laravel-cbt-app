@@ -1,3 +1,63 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    body {
+        background:
+            radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 34rem),
+            linear-gradient(180deg, #f8fbff 0%, #eef3fb 100%);
+        color: #172033;
+    }
+}
+
+@layer components {
+    .min-h-screen.bg-gray-100,
+    .min-h-screen.dark\:bg-gray-900 {
+        background:
+            radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 34rem),
+            linear-gradient(180deg, #f8fbff 0%, #eef3fb 100%);
+    }
+
+    .sm\:max-w-md {
+        max-width: 30rem;
+    }
+
+    .bg-white.shadow-md,
+    .dark\:bg-gray-800.shadow-md,
+    .bg-white.shadow-sm,
+    .dark\:bg-gray-800.shadow-sm,
+    .bg-white.shadow,
+    .dark\:bg-gray-800.shadow {
+        border: 1px solid #e6edf7;
+        border-radius: 0.75rem;
+        box-shadow: 0 18px 45px rgba(23, 32, 51, 0.08);
+    }
+
+    input[type="email"],
+    input[type="password"],
+    input[type="text"] {
+        border-radius: 0.5rem;
+        border-color: #dfe5ef;
+        min-height: 2.75rem;
+    }
+
+    input:focus {
+        border-color: #2454d6;
+        box-shadow: 0 0 0 4px #eaf0ff;
+    }
+
+    button[type="submit"],
+    .inline-flex.items-center.px-4.py-2 {
+        border-radius: 0.5rem;
+        background: #2454d6;
+        color: #fff;
+        letter-spacing: 0;
+        text-transform: none;
+    }
+
+    button[type="submit"]:hover,
+    .inline-flex.items-center.px-4.py-2:hover {
+        background: #173fba;
+    }
+}

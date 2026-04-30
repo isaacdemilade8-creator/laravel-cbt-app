@@ -3,7 +3,7 @@
 <head>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Admin Dashboard</title>
-    @vite(['resources/css/dashboard.css'])
+    @vite(['resources/css/cbt-ui.css'])
 </head>
 <body>
 

@@ -15,6 +15,22 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @if (Auth::user()->role === 'admin')
+                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                            {{ __('Admin') }}
+                        </x-nav-link>
+                    @elseif (Auth::user()->role === 'teacher')
+                        <x-nav-link :href="route('teacher.exams.index')" :active="request()->routeIs('teacher.*')">
+                            {{ __('Exams') }}
+                        </x-nav-link>
+                    @else
+                        <x-nav-link :href="route('student.dashboard')" :active="request()->routeIs('student.dashboard')">
+                            {{ __('Student') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('leaderboard')" :active="request()->routeIs('leaderboard')">
+                            {{ __('Leaderboard') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -70,6 +86,22 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            @if (Auth::user()->role === 'admin')
+                <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                    {{ __('Admin') }}
+                </x-responsive-nav-link>
+            @elseif (Auth::user()->role === 'teacher')
+                <x-responsive-nav-link :href="route('teacher.exams.index')" :active="request()->routeIs('teacher.*')">
+                    {{ __('Exams') }}
+                </x-responsive-nav-link>
+            @else
+                <x-responsive-nav-link :href="route('student.dashboard')" :active="request()->routeIs('student.dashboard')">
+                    {{ __('Student') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('leaderboard')" :active="request()->routeIs('leaderboard')">
+                    {{ __('Leaderboard') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
