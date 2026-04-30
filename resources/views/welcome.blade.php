@@ -126,6 +126,26 @@
             </article>
         </section>
     </div>
+    <footer class="footer">
+        <div class="upperdiv">
+            <div class="upperdivdivs">
+                <h1>CBT Pulse</h1>
+                <p class="p">To inspire and reach millions of schools across the 36 states in the nation</p>
+            </div>
+            <div class="upperdivdivs">
+                <h3>Contact Us</h3>
+                <p>(+234) 913 002 5598</p>
+                <p>isaacdemilade8@gmail.com</p>
+                <p>Ijebu-Ode Ogun-state, Nigeria</p>
+            </div>
+            <div class="upperdivdivs">
+                <h3>New latest</h3>
+                <p>Get the latest updates and offers</p>
+                <input type="email" placeholder="Email"><button type="button">send</button>
+            </div>
+        </div>
+        <footer class="sfooter"><p>&copy; VidaTech 2026</p></footer>
+    </footer>
 </body>
 
 </html>
