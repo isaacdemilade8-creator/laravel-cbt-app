@@ -28,7 +28,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('student.dashboard', absolute: false));
+        return redirect()->intended($this->dashboardRoute());
     }
 
     /**
@@ -42,6 +42,15 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->route('home');
+    }
+
+    private function dashboardRoute(): string
+    {
+        return match (Auth::user()?->role) {
+            'admin' => route('admin.dashboard', absolute: false),
+            'teacher' => route('teacher.exams.index', absolute: false),
+            default => route('student.dashboard', absolute: false),
+        };
     }
 }

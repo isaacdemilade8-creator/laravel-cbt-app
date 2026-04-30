@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    @vite(['/resources/css/student-dashboard.css'])
+    @vite(['resources/css/student-dashboard.css'])
     <title>Document</title>
 </head>
 <body>
@@ -33,13 +33,19 @@
 
         <p><strong>Exam:</strong> {{ $attempt->exam->title ?? 'Unknown' }}</p>
 
-        <p><strong>Score:</strong> {{ $attempt->score }}</p>
+        <p><strong>Score:</strong> {{ $attempt->score ?? 'In progress' }}</p>
 
         <p><strong>Date:</strong> {{ $attempt->created_at->format('d M Y, h:i A') }}</p>
 
-        <a href="{{ route('student.results', $attempt->id) }}">
-            View Breakdown
-        </a>
+        @if (! is_null($attempt->score))
+            <a href="{{ route('student.results', $attempt->id) }}">
+                View Breakdown
+            </a>
+        @else
+            <a href="{{ route('student.exams.show', $attempt->exam_id) }}">
+                Continue Exam
+            </a>
+        @endif
 
     </div>
 @endforeach

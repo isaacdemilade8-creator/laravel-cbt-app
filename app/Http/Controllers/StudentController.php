@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Answer;
 use App\Models\Attempt;
 use App\Models\Exam;
-use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,20 +18,20 @@ class StudentController extends Controller
     {
         $exam = Exam::with('questions.options')->findOrFail($examId);
 
-        $attempt = Attempt::where('user_id', Auth::id())
-            ->where('exam_id', $examId)
-            ->first();
+        $attempt = DB::transaction(function () use ($examId) {
+            return Attempt::query()->firstOrCreate(
+                [
+                    'user_id' => Auth::id(),
+                    'exam_id' => $examId,
+                ],
+                [
+                    'started_at' => now(),
+                ]
+            );
+        });
 
-        if ($attempt) {
-            if (! is_null($attempt->score)) {
-                return redirect()->route('student.results', $attempt->id);
-            }
-        } else {
-            $attempt = Attempt::create([
-                'user_id' => Auth::id(),
-                'exam_id' => $examId,
-                'started_at' => now(),
-            ]);
+        if (! is_null($attempt->score)) {
+            return redirect()->route('student.results', $attempt->id);
         }
 
         return view('student.exam', compact('exam', 'attempt'));
@@ -40,45 +39,55 @@ class StudentController extends Controller
 
     public function submit(Request $request, $examId)
     {
-        $attempt = Attempt::where('user_id', Auth::id())
-            ->where('exam_id', $examId)
-            ->firstOrFail();
+        $attemptId = DB::transaction(function () use ($request, $examId) {
+            $attempt = Attempt::where('user_id', Auth::id())
+                ->where('exam_id', $examId)
+                ->lockForUpdate()
+                ->firstOrFail();
 
-        $exam = Exam::findOrFail($examId);
+            if (! is_null($attempt->score)) {
+                return $attempt->id;
+            }
 
-        $expiryTime = Carbon::parse($attempt->started_at)
-            ->addMinutes($exam->duration);
+            $exam = Exam::with('questions.options')->findOrFail($examId);
+            $score = 0;
+            $answers = $request->input('answers', []);
+            $questions = $exam->questions->keyBy('id');
 
-        if (now()->greaterThan($expiryTime)) {
-            return 'Time is up. You can no longer submit this exam.';
-        }
+            $attempt->answers()->delete();
 
-        $score = 0;
-        $answers = $request->input('answers', []);
+            foreach ($answers as $questionId => $optionId) {
+                $question = $questions->get((int) $questionId);
 
-        $attempt->answers()->delete();
+                if (! $question) {
+                    continue;
+                }
 
-        foreach ($answers as $questionId => $optionId) {
-            $answer = Answer::create([
-                'attempt_id' => $attempt->id,
-                'question_id' => $questionId,
-                'option_id' => $optionId,
+                $option = $question->options->firstWhere('id', (int) $optionId);
+
+                if (! $option) {
+                    continue;
+                }
+
+                Answer::create([
+                    'attempt_id' => $attempt->id,
+                    'question_id' => $question->id,
+                    'option_id' => $option->id,
+                ]);
+
+                if ($option->is_correct) {
+                    $score++;
+                }
+            }
+
+            $attempt->update([
+                'score' => $score,
             ]);
 
-            if ($answer->option->is_correct) {
-                $score++;
-            }
-        }
+            return $attempt->id;
+        });
 
-        $attempt->update([
-            'score' => $score,
-        ]);
-
-        if (! is_null($attempt->score)) {
-            return redirect()->route('student.results', $attempt->id);
-        }
-
-        return redirect()->route('student.results', $attempt->id);
+        return redirect()->route('student.results', $attemptId);
     }
 
     public function recordTabSwitch(Request $request, $examId): JsonResponse
@@ -86,6 +95,14 @@ class StudentController extends Controller
         $attempt = Attempt::where('user_id', Auth::id())
             ->where('exam_id', $examId)
             ->firstOrFail();
+
+        if (! is_null($attempt->score)) {
+            return response()->json([
+                'cheat_count' => $attempt->cheat_count,
+                'remaining_warnings' => 0,
+                'should_auto_submit' => false,
+            ]);
+        }
 
         $maxWarnings = 3;
         $attempt->increment('cheat_count');
@@ -105,6 +122,11 @@ class StudentController extends Controller
             'answers.question.options',
             'exam.questions.options',
         ])->findOrFail($attemptId);
+
+        abort_unless(
+            Auth::id() === $attempt->user_id || Auth::user()?->role === 'admin',
+            403
+        );
 
         $score = $attempt->score;
         $total = $attempt->exam->questions->count();

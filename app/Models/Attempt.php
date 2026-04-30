@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Attempt extends Model
 {
+    protected $fillable = ['user_id', 'exam_id', 'score', 'started_at', 'cheat_count'];
+
     public function answers()
     {
         return $this->hasMany(Answer::class);
@@ -17,9 +19,7 @@ class Attempt extends Model
     }
 
     public function user()
-{
-    return $this->belongsTo(User::class);
-}
-
-    protected $fillable = ['user_id', 'exam_id', 'score', 'started_at', 'cheat_count'];
+    {
+        return $this->belongsTo(User::class);
+    }
 }

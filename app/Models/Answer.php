@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Answer extends Model
 {
-    public function Option()
+    protected $fillable = ['attempt_id', 'question_id', 'option_id'];
+
+    public function option()
     {
         return $this->belongsTo(Option::class);
     }
@@ -15,6 +17,4 @@ class Answer extends Model
     {
         return $this->belongsTo(Question::class);
     }
-
-    protected $fillable = ['attempt_id', 'question_id', 'option_id'];
 }

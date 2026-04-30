@@ -23,7 +23,7 @@
         <p>Attempts</p>
     </div>
     <div class="card">
-        <h2>{{ round($averageScore, 2) }}</h2>
+        <h2>{{ round($averageScore ?? 0, 2) }}</h2>
         <p>Avg Score</p>
     </div>
 </div>
@@ -46,9 +46,9 @@
     </tr>
     @foreach ($recentAttempts as $attempt)
         <tr>
-            <td>{{ $attempt->user->name }}</td>
-            <td>{{ $attempt->exam->title }}</td>
-            <td>{{ $attempt->score }}</td>
+            <td>{{ $attempt->user->name ?? 'Unknown' }}</td>
+            <td>{{ $attempt->exam->title ?? 'Unknown' }}</td>
+            <td>{{ $attempt->score ?? 'In progress' }}</td>
             <td>{{ $attempt->created_at }}</td>
             <td>{{ $attempt->cheat_count }}</td>
         </tr>
@@ -67,7 +67,7 @@
     </tr>
     @forelse ($flaggedStudents as $student)
         <tr>
-            <td>{{ $student->user->name }}</td>
+            <td>{{ $student->user->name ?? 'Unknown' }}</td>
             <td>{{ $student->total_cheat_count }}</td>
             <td>{{ $student->flagged_attempts }}</td>
         </tr>
@@ -84,7 +84,7 @@
 <div id="questionList">
     @foreach ($questionStats as $index => $stat)
         <div class="question-stat {{ $index >= 1 ? 'hidden-stat' : '' }}" data-index="{{ $index }}">
-            <p class="stat-question">{{ $stat->question->question_text }}</p>
+            <p class="stat-question">{{ $stat->question->question_text ?? 'Unknown question' }}</p>
             <div class="stat-row">
                 <span class="stat-item">Total <strong>{{ $stat->total_answers }}</strong></span>
                 <span class="stat-item correct">Correct <strong>{{ $stat->correct_answers }}</strong></span>

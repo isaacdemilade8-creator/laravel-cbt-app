@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Add Question</title>
-    @vite(['/resources/css/add-question.css'])
+    @vite(['resources/css/add-question.css'])
 </head>
 <body>
     <h2>Add Question</h2>
 
-    <form method="POST" action="/teacher/exams/{{ $examId }}/questions">
+    <form method="POST" action="{{ route('teacher.exams.questions.store', $examId) }}">
         @csrf
 
         <span class="field-label">Question</span>

@@ -9,7 +9,7 @@
 <body>
     <h2>Create exam</h2>
 
-    <form method="POST" action="/teacher/exams">
+    <form method="POST" action="{{ route('teacher.exams.store') }}">
         @csrf
 
         <input type="text" name="title" placeholder="Exam Title"><br><br>

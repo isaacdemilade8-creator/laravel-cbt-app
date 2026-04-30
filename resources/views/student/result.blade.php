@@ -45,9 +45,9 @@
         </p>
 
         @if ($userAnswer && $userAnswer->option->is_correct)
-            <p style="color:green;">✔ Correct</p>
+            <p style="color:green;">Correct</p>
         @else
-            <p style="color:red;">✖ Wrong</p>
+            <p style="color:red;">Wrong</p>
         @endif
 
     </div>

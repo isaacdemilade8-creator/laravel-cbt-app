@@ -29,18 +29,16 @@
         </div>
 
         <div id="palette">
-            <div id="palette">
-                @foreach ($exam->questions as $index => $question)
-                    <button type="button" class="palette-btn" onclick="goToQuestion({{ $index }})">
-                        {{ $index + 1 }}
-                    </button>
-                @endforeach
-            </div>
+            @foreach ($exam->questions as $index => $question)
+                <button type="button" class="palette-btn" onclick="goToQuestion({{ $index }})">
+                    {{ $index + 1 }}
+                </button>
+            @endforeach
         </div>
     </div>
 
     <div class="container">
-        <form id="examForm" action="/student/exams/{{ $exam->id }}/submit" method="post">
+        <form id="examForm" action="{{ route('student.exams.submit', $exam->id) }}" method="post">
             @csrf
 
             @foreach ($exam->questions as $index => $question)
