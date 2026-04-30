@@ -48,7 +48,7 @@ class DashboardController extends Controller
         $questionStats = Answer::select(
             'answers.question_id',
             DB::raw('COUNT(*) as total_answers'),
-            DB::raw('SUM(CASE WHEN options.is_correct = 1 THEN 1 ELSE 0 END) as correct_answers')
+            DB::raw('SUM(CASE WHEN options.is_correct THEN 1 ELSE 0 END) as correct_answers')
         )
             ->join('options', 'answers.option_id', '=', 'options.id')
             ->groupBy('answers.question_id')
